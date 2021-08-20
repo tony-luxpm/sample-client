@@ -26,8 +26,9 @@ const registerWithEureka = (appName, port) => {
                 }
             }
         })
-    }),
+    },
     (error, response, body) => {
+        console.log("response", body)
         if(!error) {
             console.log(`Registered with Eureka.`);
             setInterval(() => {
@@ -46,7 +47,7 @@ const registerWithEureka = (appName, port) => {
         } else {
             console.log(`Not registered with eureka due to: ${error}`);
         }
-    };
+    });
 }
 
 
