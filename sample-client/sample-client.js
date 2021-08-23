@@ -2,10 +2,9 @@ const express = require('express');
 const router = express.Router();
 const app = express();
 const port = 5000;
+app.use(express.urlencoded({ extended: true}));
+app.use(express.json());
 app.use("/", router);
-app.use(express.urlencoded({ extended: false}));
-app.use(express.json);
-
 
 require('../eureka-helper/eureka-helper').registerWithEureka('sample-client', port)
 console.log(`sample client service listening on port ${port}`);
@@ -15,7 +14,9 @@ router.get('/hello', (req,res) => {
 });
 
 router.post('/hello/post', (req, res) => {
-    res.status(201).send(`hello ${req.body}`)
+    const {body} = req
+    console.log('body', body)
+    res.status(201).send(`hello ${JSON.stringify(body)}`)
 })
 
 app.listen(port, ()=> {
